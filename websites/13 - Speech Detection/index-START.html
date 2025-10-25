@@ -1,0 +1,168 @@
+<!--
+  Some portions of this file are based on:
+  Wes Bos's JavaScript 30 course
+  Make It Yourself: https://javascript30.com/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Detection</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+  <div class="words" contenteditable>
+  </div>
+
+  <div class="controls">
+  <button id="startBtn">Start</button>
+  <button id="stopBtn">Stop</button>
+  </div>
+  
+  <div id="voicePrompt">
+    Try saying these phrases: 
+    <span>cat</span>, <span>lion</span>, <span>alien</span>, <span>dog</span>, <span>poop</span>
+  </div>
+
+<script>
+  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  
+  
+
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', e => {
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('');
+
+      //change words to other words or descriptors
+      let processedText = transcript
+        .replace(/poop/gi, '💩')
+        .replace(/cat/gi, '😺')
+        .replace(/lion/gi, '🦁')
+        .replace(/alien/gi, '👽')
+        .replace(/dog/gi, '🐶');
+
+      p.textContent = processedText;
+      if (e.results[0].isFinal) {
+        p = document.createElement('p');
+        words.appendChild(p);
+      }
+      
+      console.log(transcript);
+  });
+
+  let listening = false;
+    recognition.addEventListener('end', () => {
+      if (listening) recognition.start();
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      listening = true;
+      recognition.start();
+    });
+    document.getElementById('stopBtn').addEventListener('click', () => {
+      listening = false;
+      recognition.stop();
+    });
+
+
+</script>
+
+
+  <style>
+    html {
+      font-size: 10px;
+    }
+
+    body {
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-weight: 200;
+      font-size: 20px;
+    }
+    
+
+    .words {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      padding: 1rem 2rem 1rem 5rem;
+      background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+      background-size: 100% 3rem;
+      position: relative;
+      line-height: 3rem;
+    }
+
+    p {
+      margin: 0 0 3rem;
+    }
+
+    .words:before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      top: 0;
+      left: 30px;
+      bottom: 0;
+      border: 1px solid;
+      border-color: transparent #efe4e4;
+    }
+
+    button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+  }
+
+  button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+  }
+
+  #voicePrompt {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+      border-top: 2px solid rgba(255,255,255,0.1);
+    }
+
+    span {
+      color: #00e0ff;
+      font-weight: bold;
+    }
+  </style>
+
+</body>
+</html>

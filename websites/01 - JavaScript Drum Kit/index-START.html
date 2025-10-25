@@ -1,0 +1,115 @@
+<!--
+  Some portions of this file are based on:
+  Wes Bos's JavaScript 30 course
+  Make It Yourself: https://javascript30.com/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">Boom</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">Clap</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">Hihat</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">Kick</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">Ride</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">Snare</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">Tink</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">Tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">Rhythm</span>
+    </div>
+  <div data-key="88" class="key">
+    <kbd>X</kbd>
+    <span>STOP</span>
+  </div>
+  </div>
+
+  <audio data-key="65" src="sounds/boom.wav"></audio>
+  <audio data-key="83" src="sounds/clap.wav"></audio>
+  <audio data-key="68" src="sounds/hihat.wav"></audio>
+  <audio data-key="70" src="sounds/kick.wav"></audio>
+  <audio data-key="71" src="sounds/ride.wav"></audio>
+  <audio data-key="72" src="sounds/snare.wav"></audio>
+  <audio data-key="74" src="sounds/tink.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/Loose Beat (1) bpm _.wav"></audio>
+
+<script>
+
+let currentAudio = null; //keep track of playing sound
+
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+  if (currentAudio && currentAudio !== audio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  if (e.keyCode == 88) {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+    return;
+  }
+
+  if (!audio) return;
+
+  currentAudio = audio; // update tracker
+  audio.currentTime = 0; // rewind to the start
+  audio.play();
+
+  key.classList.add('playing');
+}
+
+function removeTransition(e) {
+  if (e.propertyName !== 'transform') return; 
+  this.classList.remove('playing'); 
+}
+
+const keys = document.querySelectorAll('.key')
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+
+</script>
+
+
+</body>
+</html>

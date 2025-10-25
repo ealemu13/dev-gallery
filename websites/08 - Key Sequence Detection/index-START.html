@@ -1,0 +1,41 @@
+<!--
+  Some portions of this file are based on:
+  Wes Bos's JavaScript 30 course
+  Make It Yourself: https://javascript30.com/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <script type="text/javascript" src="./cornify.js"></script>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div id="prompt">Type java to see something magical...</div>
+  <script>
+    const pressed = [];
+    const secretcode = 'java';
+       
+    window.addEventListener('keyup', (e) => {
+      console.log(e.key);
+      pressed.push(e.key);
+      pressed.splice(-secretcode.length -1, pressed.length - secretcode.length); //maintaines max length while shifting the elements left when new char are pushed
+      if (pressed.join('').includes(secretcode)) {
+        console.log('DING DING!');
+        cornify_add();
+      }
+      console.log(pressed)
+    })
+
+    const prompt = document.getElementById('prompt');
+    document.addEventListener('keydown', () => {
+      prompt.style.opacity = '0';
+      setTimeout(() => {
+        prompt.remove();
+      }, 500);
+    });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!--
+  Some portions of this file are based on:
+  Wes Bos's JavaScript 30 course
+  Make It Yourself: https://javascript30.com/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+  <div id="drawPrompt">Click and drag to draw</div>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#BADA55';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 100;
+  ctx.globalCompositeOperation = 'multiply';
+
+  let isDrawing = false; //flag to check if mouse is clicked down
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+  let direction = true;
+
+  function draw(e) {
+    if (!isDrawing) return; // stop function running when not mouse down
+    console.log(e);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath()
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+
+    hue++;
+    if (hue >= 360) { 
+      hue = 0;
+    }
+
+    if (ctx.lineWidth >= 200 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
+    
+    
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+
+  const drawPrompt = document.getElementById('drawPrompt');
+  window.addEventListener('mousedown', () => {
+    drawPrompt.classList.add('hidden');
+  });
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+
+  #drawPrompt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    pointer-events: none; /* allows clicking through */
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  #drawPrompt.hidden {
+    opacity: 0;
+  }
+</style>
+
+</body>
+</html>
