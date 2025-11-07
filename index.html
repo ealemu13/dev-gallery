@@ -9,46 +9,50 @@
 <body>
 
   <nav class="nav">
-      <ul class="navItems">
-        <li class="logo hidden"><a href="#">Ezra</a></li>
+    <ul class="navItems">
+      
+      
+      <div class="dropdownBackground">
+        <span class="arrow"></span>
+      </div>
 
-        <li>
-          <a href="#">About Me</a>
-          <div class="dropdown dropdown1">
-            <div class="bio">
-              <img src="ezra_face3.jpg">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate, </p>
-            </div>
+      <li>
+        <a href="#">About Me</a>
+        <div class="dropdown dropdown1">
+          <div class="bio">
+            <img src="ezra_face3.jpg">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate, </p>
           </div>
-        </li>
+        </div>
+      </li>
+        
           
-            
-        <li>
-          <a href="#">Contact</a>
-          <div class="dropdown dropdown2">
-            <ul>
-              <li><a class="button" href="https://www.linkedin.com/in/ezra-alemu-aa047b223/">Linkedin</a></li>
-              <li><a class="button" href="https://www.threads.com/@ezra_a13">Facebook</a></li>
-            </ul>
+      <li>
+        <a href="#">Contact</a>
+        <div class="dropdown dropdown2">
+          <ul>
+            <li><a class="button" href="https://www.linkedin.com/in/ezra-alemu-aa047b223/">Linkedin</a></li>
+            <li><a class="button" href="https://www.threads.com/@ezra_a13">Facebook</a></li>
+          </ul>
+        </div>
+      </li>
+
+
+
+      <li>
+        <a href="#">Make it Yourself!</a>
+        <div class="dropdown dropdown3">
+          <div class="courseBio">
+            <img src="#">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate</p>
           </div>
-        </li>
-
-
-
-        <li>
-          <a href="#">Make it Yourself!</a>
-          <div class="dropdown dropdown3">
-            <div class="courseBio">
-              <img src="#">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate</p>
-            </div>
-            <ul>
-              <li><a class="button" href="#">Webos</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </nav>
+          <ul>
+            <li><a class="button" href="#">Webos</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
 
   <header>
       <h1>20 Websites You Can Make Yourself</h1>
@@ -220,10 +224,65 @@
   <span class="shape circle"></span>
   <span class="shape triangle"></span>
   <span class="shape square"></span>
+  <span class="shape circle"></span>
+  <span class="shape triangle"></span>
+  <span class="shape square"></span>
+  <span class="shape circle"></span>
   </div>
   
 
 <script>
+  const nav = document.querySelector('.navItems');
+  const triggers = document.querySelectorAll('.navItems > li');
+  const background = document.querySelector('.dropdownBackground');
+  const topNav = nav ? nav.offsetTop : 0;
+
+  
+
+  function scrollNav() {
+    if (window.scrollY >= topNav) {
+        document.body.style.paddingTop = nav.offsetHeight + 'px';
+        document.body.classList.add('fixed-nav');
+      } else {
+        document.body.classList.remove('fixed-nav');
+        document.body.style.paddingTop = 0;
+      }
+  }
+
+  function handleEnter() {
+    this.classList.add('trigger-enter');
+    setTimeout(() => this.classList.contains('trigger-enter') &&
+                    this.classList.add('trigger-enter-active'), 150);
+
+    const dropdown = this.querySelector('.dropdown');
+    if (!dropdown) return;
+
+    const dd  = dropdown.getBoundingClientRect();
+    const nv  = nav.getBoundingClientRect();    
+
+    const width  = dd.width;
+    const height = dd.height;
+    const left   = dd.left - nv.left;
+    const top    = dd.top  - nv.top;
+
+    background.style.width  = `${width}px`;
+    background.style.height = `${height}px`;
+    background.style.setProperty('--x',   `${left}px`);
+    background.style.setProperty('--y',   `${top}px`);
+    background.classList.add('open');
+}
+
+
+  function handleLeave() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
+  }
+
+  window.addEventListener('scroll', scrollNav);
+  triggers.forEach(li => li.addEventListener('mouseenter', handleEnter));
+  triggers.forEach(li => li.addEventListener('mouseleave', handleLeave));
+
+  scrollNav();
 </script>
     
 </body>
