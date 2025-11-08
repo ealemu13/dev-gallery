@@ -421,6 +421,11 @@ body.fixed-nav .navItems {
 
 
 /* Nav dropdown 2 Buttons */
+.dropdown1 .bio img {
+  padding: 15px;
+}
+
+
 .dropdown2 {
   width: 225px;              
   padding: 14px 16px;        
