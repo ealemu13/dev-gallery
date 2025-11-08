@@ -252,26 +252,8 @@ nav ul {
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
-  
 }
 
-
-li.logo {
-  max-width: 0;
-  overflow: hidden;
-  background: white;
-  transition: all 0.5s;
-  font-weight: 600;
-  font-size: 30px;
-}
-
-li.logo a {
-  color: black;
-}
-
-li.logo.hidden {
-  display: none;
-}
 
 .dropdown {
   opacity: 0;
@@ -284,6 +266,11 @@ li.logo.hidden {
   transform: translateY(100px);
   will-change: opacity;
 }
+
+.dropdown .bio p {
+  color: #000;
+}
+
 
 .floating-shapes {
   position: fixed;
@@ -413,7 +400,10 @@ body.fixed-nav .navItems {
   opacity: 0;
   pointer-events: none;
   transition: opacity .2s ease, transform .2s ease;
-  z-index: 10;               
+  z-index: 10;
+  padding: 0;
+  margin: 0;
+  border: 0;               
 }
 
 .navItems > li {
@@ -427,4 +417,49 @@ body.fixed-nav .navItems {
 
 .navItems > li.trigger-enter-active .dropdown {
   transform: translate(-50%, 0);
+}
+
+
+/* Nav dropdown 2 Buttons */
+.dropdown2 {
+  width: 225px;              
+  padding: 14px 16px;        
+  box-sizing: border-box;
+}
+
+.dropdown2 .button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+.dropdown2 ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 9%;
+  
+}
+
+.button[href*="linkedin"] {
+  background: #0A66C2;   
+  color: white;
+}
+
+.button[href*="github"] {
+  background: #24292E;   
+  color: white;
+}
+
+.button[href*="mailto"] {
+  background: #EA4335;  
+  color: white;
 }
