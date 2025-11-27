@@ -102,12 +102,12 @@ body {
 }
 
 header {
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -115,10 +115,10 @@ header {
 }
 
 header h1 {
-  font-size: 3.8rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 0%;
+  font-family: "Bebas Neue", sans-serif;  font-size: 5.8rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
   
 }
 
@@ -212,12 +212,7 @@ nav ul {
   padding: 10px;
    width: min(1100px, 100%);
    border-radius: 999px;
-   background:
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,0.82) 0%,     
-      rgba(255,255,255,0.92) 100%   
-    );
+   background: linear-gradient(90deg,#eef5ff,#ecf5f6);
    backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border:1px solid rgba(0,0,0,0.08);
@@ -433,14 +428,11 @@ body.fixed-nav .navItems {
 }
 
 .dropdown2 .button {
-  display: block;
-  width: 100%;
   text-align: center;
-  padding: 12px 14px;
-  border-radius: 6px;
+  display: flex;              
+  justify-content: center;  
+  align-items: center;
   font-weight: 700;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,.12);
 }
 
 .dropdown2 ul {
@@ -467,4 +459,51 @@ body.fixed-nav .navItems {
 .button[href*="mailto"] {
   background: #EA4335;  
   color: white;
+}
+
+.dropdown3 {
+  min-width: 260px;
+  padding: 18px 20px 16px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.dropdown3 .courseBio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dropdown3 p {
+  color: black;
+}
+
+.dropdown3 .courseBio img {
+  margin-top: 10px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+
+.dropdown3 .course-button {
+  display: block;
+  width: 100%;
+  padding: 11px 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffc600, #ff9f1c);
+  color: #1a1300;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+.dropdown3 .course-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  filter: brightness(1.03);
 }
